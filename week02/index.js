@@ -6,8 +6,8 @@ var renderer;
 let init = () => {
 
     let vertices = [ vec2(0.0, 0.5), vec2(-0.5, -0.5), vec2(0.5, -0.5) ];
-    let model = new RawModel(vertices)
-    renderer = new Renderer(model)
+    // let model = new RawModel(vertices)
+    renderer = new Renderer(vertices)
 
     gl.clearColor(1,0, 0, 0.2);
 }

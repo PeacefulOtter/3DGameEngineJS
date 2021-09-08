@@ -12,7 +12,8 @@ class Shader {
      */
     constructor( vertexFile, fragmentFile ) {
         this.program = initShaders(gl, vertexFile, fragmentFile )
-        this.uniforms = [];
+        this.attributes = {}
+        this.uniforms = {};
     }
 
 
@@ -27,18 +28,20 @@ class Shader {
     /**
      * 
      * @param {String} attributeName 
-     * @param {Array} bufferData
+     * @param {Array} bufferData: data to put on the buffer
+     * @param {int} dimension: dimension of each element in buffer
      */
-    addAttribute = ( attributeName, bufferData ) => {
-        // console.log(bufferData);
-        // let buffer = gl.createBuffer();
-        // gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
-        // gl.bufferData(gl.ARRAY_BUFFER, flatten(bufferData), gl.STATIC_DRAW);
+    addAttribute = ( attributeName, bufferData, dimension ) => {
+        console.log("Adding attribute ", attributeName, " with data: ", bufferData);
+        
+        let buffer = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+        gl.bufferData(gl.ARRAY_BUFFER, flatten(bufferData), gl.STATIC_DRAW);
 
-        // let loc = gl.getAttribLocation(this.program, attributeName);
-        // gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
-        // gl.vertexAttribPointer(loc, 4, gl.FLOAT, false, 0, 0);
-        // gl.enableVertexAttribArray(loc);
+        let loc = gl.getAttribLocation(this.program, attributeName);
+        gl.vertexAttribPointer(loc, dimension, gl.FLOAT, false, 0, 0);
+
+        this.attributes[ attributeName ] = buffer;
         
         // gl.bindAttribLocation( this.program, loc, attributeName );
     }

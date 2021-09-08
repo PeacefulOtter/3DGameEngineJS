@@ -3,15 +3,20 @@
 
 class Renderer
 {
+
     /**
      * 
-     * @param {RawModel} model 
+     * @param {Array (of vertex)} vertices 
      */
-    constructor( model ) {
-        this.model = model
+    constructor( vertices ) {
+        this.vertexCount = vertices.length
         this.transform = new Transform()
+        
+        this.color = [vec4(1, 0, 1, 1), vec4(0, 0, 1, 1), vec4(1, 0, 0, 1)];
+
         this.shader = new Shader( "a.vs", "a.fs" )
-        this.shader.addAttribute( "color", vec4(1, 0, 1, 1) )
+        this.shader.addAttribute( "position", vertices, 2 )
+        this.shader.addAttribute( "color", this.color, 4 )
         this.shader.addUniform("translation")
         
         this.aim = vec2(0, 0);
@@ -29,19 +34,26 @@ class Renderer
     }
 
     update = () => {
+        // UPDATE AN ATTRIBUTE
+        this.color[0] = add(this.color[0], vec4(0, 0.005, 0, 0))
+        this.color[1] = add(this.color[1], vec4(0, 0.005, 0, 0))
+        this.color[2] = add(this.color[2], vec4(0, 0.005, 0, 0))
+        gl.bindBuffer(gl.ARRAY_BUFFER, this.shader.attributes["color"])
+        gl.bufferData(gl.ARRAY_BUFFER, flatten(this.color), gl.STATIC_DRAW);
+
         let delta = sub(this.aim, this.transform.translate);
         this.transform.move(delta[0] / 50, delta[1] / 50);
     }
 
     draw = () => {
-        // gl.bindVertexArray( this.model.vaoId );
+        // gl.bindVertexArray( this.vaoId );
         gl.enableVertexAttribArray( 0 );
-        // gl.enableVertexAttribArray( 1 );
+        gl.enableVertexAttribArray( 1 );
 
-        gl.drawArrays( gl.TRIANGLES, 0, this.model.vertexCount );
+        gl.drawArrays( gl.TRIANGLES, 0, this.vertexCount );
 
         gl.disableVertexAttribArray( 0 );
-        // gl.disableVertexAttribArray( 1 );
+        gl.disableVertexAttribArray( 1 );
         // gl.bindVertexArray( 0 );
     }
 }
