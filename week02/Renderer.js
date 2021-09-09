@@ -19,6 +19,7 @@ class Renderer
         this.shader.addAttribute( "color", this.color, 4 )
         this.shader.addUniform("translation")
         
+        // dummy stuff
         this.aim = vec2(0, 0);
     }
 
@@ -26,10 +27,10 @@ class Renderer
     render = () => {
         this.shader.bind()
         this.shader.updateUniforms( this.transform )
-        this.draw( gl )
+        this.draw()
     }
 
-    setPoint = (x, y) => {
+    setAim = (x, y) => {
         this.aim = vec2(x, y);
     }
 
@@ -50,6 +51,13 @@ class Renderer
         gl.enableVertexAttribArray( 0 );
         gl.enableVertexAttribArray( 1 );
 
+        // gl.bindBuffer( gl.ARRAY_BUFFER,  this.shader.attributes["position"] );
+        // gl.vertexAttribPointer( 0, 2, gl.FLOAT, false, 12, 0 );
+        // gl.vertexAttribPointer( 1, 4, gl.FLOAT, false, 12, 8 ); // 12 = FLOAT_BYTES (4) * NB_FLOAT_BEFORE (3)
+        gl.bindBuffer( gl.ARRAY_BUFFER, this.shader.attributes["position"])
+        gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
+        gl.bindBuffer( gl.ARRAY_BUFFER, this.shader.attributes["color"])
+        gl.vertexAttribPointer(1, 4, gl.FLOAT, false, 0, 0);
         gl.drawArrays( gl.TRIANGLES, 0, this.vertexCount );
 
         gl.disableVertexAttribArray( 0 );

@@ -43,7 +43,7 @@ class Shader {
 
         this.attributes[ attributeName ] = buffer;
         
-        // gl.bindAttribLocation( this.program, loc, attributeName );
+        gl.bindAttribLocation( this.program, loc, attributeName );
     }
 
     /**
