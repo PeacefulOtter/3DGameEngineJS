@@ -5,10 +5,10 @@ class Transform
 {
     constructor()
     {
-        this.translate = vec2(0, 0);
+        this.translation = new Vector3f(0, 0, 0);
     }
 
-    move = (x, y) => {
-        this.translate = add(this.translate, vec2(x, y))
+    translate = (x, y, z) => {
+        this.translation = this.translation.add(x, y, z)
     }
 }

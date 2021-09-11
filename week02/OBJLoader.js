@@ -13,17 +13,18 @@ class OBJLoader {
         }
     }
 
-    static loadFile = async ( filename )  => {   
+    static loadFile = ( filename )  => {   
         let vertices = []
         let textures = []
         // let tangents = []
         let normals =  []
         let indices = []
 
-        const response = await fetch('../res/models/sphere.obj');
-        const text = await response.text();
+        // const response = await fetch( '../res/models/' + filename );
+        // const text = await response.text()
+        const text = loadFileAJAX( '../res/models/' + filename );
+
         text.split('\n').forEach(line => {
-            
             let data = line.split(' ')
             let keyword = data.shift()
 
@@ -32,7 +33,6 @@ class OBJLoader {
 
             // usemtl
             // tangents
-
 
             if ( keyword === "v" )
                 vertices.push( data.map(parseFloat) )

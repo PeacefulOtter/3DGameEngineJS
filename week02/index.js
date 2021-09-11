@@ -8,8 +8,13 @@ var points = []; // temp
 
 let init = () => {
 
-    let vertices = [ vec2(0.0, 0.5), vec2(-0.5, -0.5), vec2(0.5, -0.5) ];
-    renderer = new Renderer(vertices)
+    // let vertices = [ vec2(0.0, 0.5), vec2(-0.5, -0.5), vec2(0.5, -0.5) ];
+    // renderer = new Renderer(vertices)
+    let model = RawModel._constructWithOBJ( "sphere.obj" )
+    let shader = new Shader( "3D.vs", "3D.fs" )
+    renderer = new Renderer3D( model, shader )
+
+    new RawModel()
 
     gl.clearColor(1,0, 0, 0.2);
 
@@ -24,7 +29,7 @@ let render = () => {
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
     // renderer.update()
-    // renderer.render()
+    renderer.render()
 
     points.forEach((point, i) => {
         point.update()

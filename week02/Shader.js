@@ -21,8 +21,12 @@ class Shader {
         gl.useProgram( this.program );
     }
 
+    /**
+     * FIXME: NEEDS TO BE DYNAMIC ===========
+     * @param {Transform} transform 
+     */
     updateUniforms = ( transform ) => {
-        this.setUniformVector2f( "translation", transform.translate )
+        this.setUniformVector3f( "translation", transform.translation.vec() )
     }
 
     /**
@@ -75,4 +79,14 @@ class Shader {
     {
         gl.uniform2f( this.uniforms[ uniformName ], value[0], value[1] );
     }
+
+    /**
+     * 
+     * @param {String} uniformName 
+     * @param {vec3} value 
+     */
+     setUniformVector3f = ( uniformName, value ) =>
+     {
+        gl.uniform3f( this.uniforms[ uniformName ], value[0], value[1], value[2] );
+     }
 } 
