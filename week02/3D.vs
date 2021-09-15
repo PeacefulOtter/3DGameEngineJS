@@ -17,6 +17,7 @@ void main() {
     vnormal = normal;
     vcolor = color;
 
-    vec3 actualPos = position + translation + cameraTranslation;
+    vec3 t = translation + cameraTranslation;
+    vec3 actualPos = position + t;
     gl_Position = vec4(actualPos.xyz, 1.0);
 }
