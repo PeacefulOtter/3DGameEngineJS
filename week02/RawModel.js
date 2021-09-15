@@ -8,31 +8,41 @@ class RawModel {
      * DONT INSTANTIATE A RAWMODEL WITH THE CONSTRUCTOR, USE STATIC METHODS
      * ===========================================================
      */
-    constructor( vertices, normals, textures, indices ) 
+    constructor( positions, textures, normals ) 
     {
-        this.vertices = vertices;
-        this.normals = normals;
-        this.textures = textures;
-        this.indices = indices;
+        this.positions = positions;
+        this.textures = textures || [];
+        this.normals = normals || [];
+        // this.tangents = tangents || []
     }
 
     /**
-     * 
-     * @param {string} filename 
-     * @returns 
+     * @param {String} filename null
+     * @return {RawModel} model 
      */
     static _constructWithOBJ = ( filename ) => {
-        const {vertices, normals, textures, indices} = OBJLoader.loadFile( filename )
-        console.log(vertices, normals, textures, indices);
-        return new RawModel(vertices, normals, textures, indices)
+        const faces = OBJLoader.loadFile( filename )
+        console.log(faces);
+        let positions = faces.map( face => {
+            return face.map(f => f[0])
+        }).flat(1)
+        console.log("pos", positions);
+        let textures = faces.map( face => {
+            return face.map(f => f[1])
+        }).flat(1)
+        console.log("tex", textures);
+        let normals = faces.map( face => {
+            return face.map(f => f[2])
+        }).flat(1)
+        console.log("nor", normals);
+        return new RawModel(positions, textures, normals )
     }
 
     /**
-     * 
-     * @param {RawModel} model 
-     * @returns 
+     * @param {Float[][3]} Array of positions
+     * @returns {RawModel} model 
      */
-    static _constructWithVertices = ( vertices ) => {
-        return new RawModel( vertices, [], [], [] )
+    static _constructWithVertices = ( positions ) => {
+        return new RawModel( positions )
     }
 }

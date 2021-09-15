@@ -3,16 +3,17 @@
 
  class Renderer {
 
+    /**
+     * 
+     * @param {RawModel} model 
+     * @param {Shader} shader 
+     */
     constructor( model, shader ) 
     {
         this.model = model;
         this.shader = shader;
         this.transform = new Transform();
-        this.vertexCount = model.vertices.length
-    }
-
-    addAttribute = (name, data, dimension) => {
-        this.shader.addAttribute( name, data, dimension )
+        this.vertexCount = model.positions.length
     }
 
     render = () => {
@@ -21,6 +22,15 @@
         this.draw()
     }
 
-    // need to be overwritten by herited classes
-    draw = () => {}
+    draw = () => {
+        for (const [key, value] of Object.entries(this.shader.attributes)) {
+            this.shader.bindAttribute( value.buffer, value.attribute, value.dimension )
+        }
+
+        gl.drawArrays( gl.TRIANGLES, 0, this.vertexCount );
+
+        for (const [key, value] of Object.entries(this.shader.attributes)) {
+            gl.disableVertexAttribArray( value.attribute );
+        }
+    }
 }

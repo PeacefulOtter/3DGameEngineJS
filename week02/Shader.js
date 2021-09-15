@@ -14,6 +14,10 @@ class Shader {
         this.program = initShaders(gl, vertexFile, fragmentFile )
         this.attributes = {}
         this.uniforms = {};
+
+        // TODO: make this auto
+        this.addUniform("translation")
+        this.addUniform("cameraTranslation")
     }
 
 
@@ -23,10 +27,12 @@ class Shader {
 
     /**
      * FIXME: NEEDS TO BE DYNAMIC ===========
+     * FIXME: camera as argument to avoid var
      * @param {Transform} transform 
      */
     updateUniforms = ( transform ) => {
         this.setUniformVector3f( "translation", transform.translation.vec() )
+        this.setUniformVector3f( "cameraTranslation", camera.transform.translation.vec() )
     }
 
     /**
@@ -36,18 +42,34 @@ class Shader {
      * @param {int} dimension: dimension of each element in buffer
      */
     addAttribute = ( attributeName, bufferData, dimension ) => {
-        console.log("Adding attribute ", attributeName, " with data: ", bufferData);
+        let data = flatten(bufferData)
+        console.log("Adding attribute", attributeName, "with data: \n", data);
         
         let buffer = gl.createBuffer();
         gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
-        gl.bufferData(gl.ARRAY_BUFFER, flatten(bufferData), gl.STATIC_DRAW);
+        gl.bufferData(gl.ARRAY_BUFFER, data, gl.STATIC_DRAW);
 
         let loc = gl.getAttribLocation(this.program, attributeName);
+        if ( loc == -1 )
+        {
+            console.log("Cannot find location of", attributeName);
+            return;
+        }
         gl.vertexAttribPointer(loc, dimension, gl.FLOAT, false, 0, 0);
 
-        this.attributes[ attributeName ] = buffer;
+        this.attributes[ attributeName ] = {
+            "attribute": loc,
+            "buffer": buffer, 
+            "dimension": dimension
+        };
         
         gl.bindAttribLocation( this.program, loc, attributeName );
+    }
+
+    bindAttribute = ( buffer, attribute, dimension ) => {
+        gl.bindBuffer( gl.ARRAY_BUFFER, buffer )
+        gl.enableVertexAttribArray( attribute ) 
+        gl.vertexAttribPointer( attribute, dimension, gl.FLOAT, false, 0, 0 )
     }
 
     /**
@@ -57,6 +79,7 @@ class Shader {
     addUniform = (uniformName) => {
         let loc = gl.getUniformLocation(this.program, uniformName)
         this.uniforms[ uniformName ] = loc;
+        console.log(loc);
     }
 
 

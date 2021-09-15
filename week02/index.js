@@ -2,6 +2,7 @@
 
 var gl;
 var renderer;
+var camera;
 
 
 var points = []; // temp
@@ -14,21 +15,39 @@ let init = () => {
     let shader = new Shader( "3D.vs", "3D.fs" )
     renderer = new Renderer3D( model, shader )
 
-    new RawModel()
+    camera = new Camera(0, 0, -1);
 
     gl.clearColor(1,0, 0, 0.2);
+    
+    
+    // gl.frontFace( gl.CW ); BREAKS EVERYTHING
+    /* enableCulling */
+    gl.enable( gl.CULL_FACE );
+    gl.cullFace( gl.BACK );
+    // disable culling: glDisable( GL_CULL_FACE );
 
-    gl.bindBuffer(gl.ARRAY_BUFFER, renderer.shader.attributes["position"]);
+    gl.enable( gl.DEPTH_TEST );
+    // gl.enable( gl.DEPTH_CLAMP ); default?
+    // gl.enable( gl.TEXTURE_2D ); default?
+
+
+    // USED FOR INDICES
+    // var uints_for_indices = gl.getExtension("OES_element_index_uint");
+    // console.log(uints_for_indices);
+
+
+
+    /*gl.bindBuffer(gl.ARRAY_BUFFER, renderer.shader.attributes["position"]);
     gl.bufferData(gl.ARRAY_BUFFER, 8*100, gl.STATIC_DRAW);
 
     gl.bindBuffer(gl.ARRAY_BUFFER, renderer.shader.attributes["color"]);
-    gl.bufferData(gl.ARRAY_BUFFER, 16*100, gl.STATIC_DRAW);
+    gl.bufferData(gl.ARRAY_BUFFER, 16*100, gl.STATIC_DRAW);*/
 }
 
 let render = () => {
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-    // renderer.update()
+    renderer.update()
     renderer.render()
 
     points.forEach((point, i) => {
@@ -37,10 +56,6 @@ let render = () => {
     });
 
     window.requestAnimationFrame(render)
-}
-
-let keyHandler = (e) => {
-
 }
 
 window.onload = () => {

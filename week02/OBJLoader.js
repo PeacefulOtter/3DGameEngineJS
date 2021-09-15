@@ -3,22 +3,12 @@
 
 class OBJLoader {
 
-
-    static Vertex = class {
-        constructor( pos, tex, nor )
-        {
-            this.pos = pos;
-            this.tex = tex;
-            this.nor = nor;
-        }
-    }
-
     static loadFile = ( filename )  => {   
-        let vertices = []
+        let positions = []
         let textures = []
         // let tangents = []
         let normals =  []
-        let indices = []
+        let faces = []
 
         // const response = await fetch( '../res/models/' + filename );
         // const text = await response.text()
@@ -33,33 +23,32 @@ class OBJLoader {
 
             // usemtl
             // tangents
+            data = data.filter( elt => elt != "" )
+            let dataFloat = data.map(parseFloat)
 
             if ( keyword === "v" )
-                vertices.push( data.map(parseFloat) )
+                positions.push( dataFloat )
             else if ( keyword === "vt" )
-                textures.push( data.map(parseFloat) )
+                textures.push( [dataFloat[0], 1.0 - dataFloat[1]] )
             else if ( keyword === "vn" )
-                normals.push( data.map(parseFloat) )
-            else if ( keyword === "f")
+                normals.push( dataFloat )
+            else if ( keyword === "f")  
             {    
-                let facet = [];
+                let face = [];
                 for (let i = 0; i <= 2; i++) {
                     let vertex = data[i].split('/').map(num => parseInt(num))
-                    facet.push(new this.Vertex(
-                        vertices[vertex[0] - 1], 
+                    // FIXME: OBJ file does not necessary have texture and normals
+                    // FIXME: Indices are not necessarily sorted (?)
+                    face.push( [
+                        positions[vertex[0] - 1], 
                         textures[vertex[1] - 1], 
-                        normals[vertex[2] - 1] ))
+                        normals[vertex[2] - 1] ] )
                 }
-                indices.push( facet )
+                faces.push( face )
             }
                 
         });
-        
-        return {
-            "vertices": vertices,
-            "textures": textures,
-            "normals": normals,
-            "indices": indices
-        }
+
+        return faces    
     }
 }  

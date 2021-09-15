@@ -23,14 +23,16 @@ class KeyHandler
         vertices[1][1] += canvasY
         vertices[2][1] += canvasY
 
-        let model = RawModel._constructWithVertices( vertices )
-        let shader = new Shader( "2D.vs", "2D.fs" )
-        let point = new Renderer2D( model, shader );
+        let m = RawModel._constructWithVertices( vertices )
+        let s = new Shader( "2D.vs", "2D.fs" )
+        let point = new Renderer2D( m, s );
         points.push(point)
     }
 
     static handleKeyDown = (e) => {
         console.log(e);
+        camera.move(0.1, 0, 0.1)
+        console.log(camera.transform.translation);
     }
 
 }
