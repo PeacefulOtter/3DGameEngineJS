@@ -1,37 +1,33 @@
 
 "use strict"
 
-
-
-class Renderer3D extends Renderer {
-
-    /**
-     * 
+/**
+     * Extends Renderer
      * @param {RawModel} model: the 3D model to render
      * @param {Shader} shader: the shader to render the model
      */
-    constructor( model, shader )
-    {
+class Renderer3D extends Renderer {
+    constructor(model, shader) {
         super( model, shader )
 
-        this.color = [];
+        console.log(super.draw);
+        /*this.color = [];
         for (let i = 0; i < model.positions.length * 3; i++) {
             this.color.push(vec4(Math.random(), Math.random(), Math.random(), 1))            
-        }
+        }*/
 
-        console.log(shader);
+        shader.addUniform( "diffuse", "1i" )
 
         shader.addAttribute( "position", model.positions, 3 )
         // shader.addAttribute( "texture", model.textures, 2 )
         // shader.addAttribute( "normal", model.normals, 3 )
-        shader.addAttribute( "color", this.color, 4 )
-        
+        // shader.addAttribute( "color", this.color, 4 )
 
         this.transform.translate(0, 0, -5.9);
-
-        this.time = 0;
         // this.mesh = new Mesh( model )
     }
+    
+
 
     update = () => {
         // console.log("here");
@@ -40,8 +36,13 @@ class Renderer3D extends Renderer {
     }
 
 
-    /*draw = () => {
-        gl.enableVertexAttribArray( 0 );
+    draw = () => {
+        this.model.texture.bind(this.shader.uniforms[ "diffuse" ].loc, 0)
+        console.log(Renderer);
+        console.log(Renderer.prototype);
+        console.log(this);
+        super.draw()
+        /*gl.enableVertexAttribArray( 0 );
         gl.enableVertexAttribArray( 1 );
         gl.enableVertexAttribArray( 2 );
         // gl.enableVertexAttribArray( 3 );
@@ -66,6 +67,7 @@ class Renderer3D extends Renderer {
         gl.disableVertexAttribArray( 0 );
         gl.disableVertexAttribArray( 1 );
         gl.disableVertexAttribArray( 2 );
-        // gl.disableVertexAttribArray( 3 );
-    }*/
+        // gl.disableVertexAttribArray( 3 );*/
+
+    }
 }

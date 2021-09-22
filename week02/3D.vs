@@ -4,13 +4,12 @@ attribute vec2 texture;
 attribute vec3 normal;
 attribute vec4 color;
 
-varying vec2 vtexture;
+varying highp vec2 vtexture;
 varying vec3 vnormal;
 varying vec4 vcolor;
 
 uniform vec3 translation;
 uniform vec3 cameraTranslation;
-
 
 void main() {
     vtexture = texture;

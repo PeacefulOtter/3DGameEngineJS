@@ -1,28 +1,30 @@
 "use strict"
 
-
+// TODO; separate simple models??
 class RawModel {
 
     /**
+     * FIXME: - USE CONSTRUCTOR
      * ===========================================================
      * DONT INSTANTIATE A RAWMODEL WITH THE CONSTRUCTOR, USE STATIC METHODS
      * ===========================================================
      */
-    constructor( positions, textures, normals ) 
+    constructor( positions, textures, normals, material ) 
     {
         this.positions = positions;
         this.textures = textures || [];
         this.normals = normals || [];
         // this.tangents = tangents || []
+        this.material = material || null
     }
 
     /**
      * @param {String} filename null
      * @return {RawModel} model 
      */
-    static _constructWithOBJ = ( filename ) => {
-        const faces = OBJLoader.loadFile( filename )
-        console.log(faces);
+    static _constructWithOBJ = ( objFilename, textFilename, textExtension ) => {
+        const faces = OBJLoader.loadFile( objFilename )
+        console.log("faces", faces);
         let positions = faces.map( face => {
             return face.map(f => f[0])
         }).flat(1)
@@ -35,7 +37,10 @@ class RawModel {
             return face.map(f => f[2])
         }).flat(1)
         console.log("nor", normals);
-        return new RawModel(positions, textures, normals )
+
+        
+        let material = new Material(textFilename, textExtension );
+        return new RawModel( positions, textures, normals, material )
     }
 
     /**
@@ -44,5 +49,19 @@ class RawModel {
      */
     static _constructWithVertices = ( positions ) => {
         return new RawModel( positions )
-    }
+    }:
 }
+
+
+// export default {
+//     RawModel: {
+//         init: false,
+//         constructor = () => {
+//             this.a = a;
+//         },
+//         create = (blob) => {
+//             console.log(blob);
+            
+//         }
+//     }
+// }

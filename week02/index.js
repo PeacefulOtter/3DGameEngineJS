@@ -11,7 +11,7 @@ let init = () => {
 
     // let vertices = [ vec2(0.0, 0.5), vec2(-0.5, -0.5), vec2(0.5, -0.5) ];
     // renderer = new Renderer(vertices)
-    let model = RawModel._constructWithOBJ( "sphere.obj" )
+    let model = RawModel._constructWithOBJ( "sphere.obj", "brick", "jpg" )
     let shader = new Shader( "3D.vs", "3D.fs" )
     renderer = new Renderer3D( model, shader )
 
@@ -65,10 +65,8 @@ window.onload = () => {
     
     init()
 
-    KeyHandler.target = renderer;
-    let index = 0;
     document.onkeydown = (e) => { KeyHandler.handleKeyDown( e ) }
-    canvas.onclick = (e) => { KeyHandler.handleClick( e, index++ ) }
+    canvas.onclick = (e) => { KeyHandler.handleClick( e ) }
     
     
     render()

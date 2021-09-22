@@ -16,8 +16,8 @@ class Shader {
         this.uniforms = {};
 
         // TODO: make this auto
-        this.addUniform("translation")
-        this.addUniform("cameraTranslation")
+        this.addUniform("translation", "vec3")
+        this.addUniform("cameraTranslation", "vec3")
     }
 
 
@@ -26,13 +26,27 @@ class Shader {
     }
 
     /**
-     * FIXME: NEEDS TO BE DYNAMIC ===========
+     * FIXME: NEEDS TO BE MORE GENERIC ===========
      * FIXME: camera as argument to avoid var
      * @param {Transform} transform 
      */
-    updateUniforms = ( transform ) => {
-        this.setUniformVector3f( "translation", transform.translation.vec() )
-        this.setUniformVector3f( "cameraTranslation", camera.transform.translation.vec() )
+    updateUniforms = ( transform, model ) => {
+        for ( let [key, value] of Object.entries(this.uniforms) ) 
+        {
+            switch (key) {
+                case "diffuse":
+                    // this.setUniformF( value.loc, model.texture )
+                    break;
+                case "translation":
+                    this.setUniformVector3f( value.loc, transform.translation.vec() )
+                    break;
+                case "cameraTranslation":
+                    this.setUniformVector3f( value.loc, camera.transform.translation.vec() )
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 
     /**
@@ -42,6 +56,7 @@ class Shader {
      * @param {int} dimension: dimension of each element in buffer
      */
     addAttribute = ( attributeName, bufferData, dimension ) => {
+        console.log(attributeName, bufferData);
         let data = flatten(bufferData)
         console.log("Adding attribute", attributeName, "with data: \n", data);
         
@@ -73,13 +88,13 @@ class Shader {
     }
 
     /**
-     * 
+     * Register a shader uniform
      * @param {String} uniformName 
      */
-    addUniform = (uniformName) => {
+    addUniform = (uniformName, uniformType) => {
         let loc = gl.getUniformLocation(this.program, uniformName)
-        this.uniforms[ uniformName ] = loc;
-        console.log(loc);
+        this.uniforms[ uniformName ] = { "loc": loc, "type": uniformType };
+        console.log(uniformName, this.uniforms[ uniformName ]);
     }
 
 
@@ -88,19 +103,29 @@ class Shader {
      * @param {String} uniformName 
      * @param {float} value 
      */
-    setUniformF( uniformName, value )
+    setUniformF( loc, value )
     {
-        gl.uniform1f( this.uniforms[ uniformName ], value );
+        gl.uniform1f( loc, value );
     }
+
+    /**
+     * 
+     * @param {String} uniformName 
+     * @param {int} value 
+     */
+     setUniformI( loc, value )
+     {
+         gl.uniform1i( loc, value );
+     }
 
     /**
      * 
      * @param {String} uniformName 
      * @param {vec2} value 
      */
-    setUniformVector2f = ( uniformName, value ) =>
+    setUniformVector2f = ( loc, value ) =>
     {
-        gl.uniform2f( this.uniforms[ uniformName ], value[0], value[1] );
+        gl.uniform2f( loc, value[0], value[1] );
     }
 
     /**
@@ -108,8 +133,8 @@ class Shader {
      * @param {String} uniformName 
      * @param {vec3} value 
      */
-     setUniformVector3f = ( uniformName, value ) =>
+     setUniformVector3f = ( loc, value ) =>
      {
-        gl.uniform3f( this.uniforms[ uniformName ], value[0], value[1], value[2] );
+        gl.uniform3f( loc, value[0], value[1], value[2] );
      }
 } 

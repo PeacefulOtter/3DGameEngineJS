@@ -1,15 +1,12 @@
 "use strict"
 
-
- class Renderer {
-
-    /**
+/**
      * 
      * @param {RawModel} model 
      * @param {Shader} shader 
      */
-    constructor( model, shader ) 
-    {
+class Renderer {
+    constructor( model, shader ) {
         this.model = model;
         this.shader = shader;
         this.transform = new Transform();
@@ -18,7 +15,7 @@
 
     render = () => {
         this.shader.bind()
-        this.shader.updateUniforms( this.transform )
+        this.shader.updateUniforms( this.transform, this.model )
         this.draw()
     }
 
@@ -34,3 +31,4 @@
         }
     }
 }
+ 

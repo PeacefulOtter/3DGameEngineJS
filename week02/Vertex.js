@@ -3,6 +3,7 @@
 class Vertex {
     static VERTEX_SIZE = 8; // 11
 
+    // FIXME: get rid of this or refactor
     constructor( pos, tex, nor )
     {
         this.position = pos;
