@@ -11,11 +11,11 @@ let init = () => {
 
     // let vertices = [ vec2(0.0, 0.5), vec2(-0.5, -0.5), vec2(0.5, -0.5) ];
     // renderer = new Renderer(vertices)
-    let model = RawModel._constructWithOBJ( "sphere.obj", "brick", "jpg" )
+    let model = RawModel._constructWithOBJ( "sphere.obj", "brick", ".jpg" )
     let shader = new Shader( "3D.vs", "3D.fs" )
     renderer = new Renderer3D( model, shader )
 
-    camera = new Camera(0, 0, -1);
+    camera = new Camera(0, 0, 0.5);
 
     gl.clearColor(1,0, 0, 0.2);
     

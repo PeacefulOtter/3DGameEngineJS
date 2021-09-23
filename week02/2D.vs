@@ -11,6 +11,7 @@ uniform vec3 cameraTranslation;
 
 void main() {
     vec2 actualPos = position + translation.xy + cameraTranslation.xy;
-    gl_Position = vec4(actualPos.x, actualPos.y, 0.0, 1.0);
+    vec3 pos = vec3(actualPos.xy, cameraTranslation.z);
+    gl_Position = vec4(pos.x, pos.y, pos.z, 1.0);
     vcolor = color;
 }

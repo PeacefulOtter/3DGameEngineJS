@@ -9,8 +9,6 @@
 class Renderer3D extends Renderer {
     constructor(model, shader) {
         super( model, shader )
-
-        console.log(super.draw);
         /*this.color = [];
         for (let i = 0; i < model.positions.length * 3; i++) {
             this.color.push(vec4(Math.random(), Math.random(), Math.random(), 1))            
@@ -19,11 +17,12 @@ class Renderer3D extends Renderer {
         shader.addUniform( "diffuse", "1i" )
 
         shader.addAttribute( "position", model.positions, 3 )
-        // shader.addAttribute( "texture", model.textures, 2 )
+        shader.addAttribute( "texture", model.textures, 2 )
         // shader.addAttribute( "normal", model.normals, 3 )
         // shader.addAttribute( "color", this.color, 4 )
 
-        this.transform.translate(0, 0, -5.9);
+        this.transform.translate(0, 0, -1.5);
+
         // this.mesh = new Mesh( model )
     }
     
@@ -37,11 +36,15 @@ class Renderer3D extends Renderer {
 
 
     draw = () => {
-        this.model.texture.bind(this.shader.uniforms[ "diffuse" ].loc, 0)
-        console.log(Renderer);
-        console.log(Renderer.prototype);
-        console.log(this);
-        super.draw()
+        this.model.material.diffuse.bind(this.shader.uniforms[ "diffuse" ].loc, 0)
+        Renderer.prototype.draw.call(this)
+
+    }
+}
+
+
+// DRAW
+
         /*gl.enableVertexAttribArray( 0 );
         gl.enableVertexAttribArray( 1 );
         gl.enableVertexAttribArray( 2 );
@@ -68,6 +71,3 @@ class Renderer3D extends Renderer {
         gl.disableVertexAttribArray( 1 );
         gl.disableVertexAttribArray( 2 );
         // gl.disableVertexAttribArray( 3 );*/
-
-    }
-}

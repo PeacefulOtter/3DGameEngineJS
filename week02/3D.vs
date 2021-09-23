@@ -14,9 +14,10 @@ uniform vec3 cameraTranslation;
 void main() {
     vtexture = texture;
     vnormal = normal;
-    vcolor = color;
 
     vec3 t = translation + cameraTranslation;
     vec3 actualPos = position + t;
     gl_Position = vec4(actualPos.xyz, 1.0);
+
+    vcolor = vec4(texture.x, texture.y, 0.0, 1.0);
 }

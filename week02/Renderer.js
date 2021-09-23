@@ -19,7 +19,7 @@ class Renderer {
         this.draw()
     }
 
-    draw = () => {
+    draw () {
         for (const [key, value] of Object.entries(this.shader.attributes)) {
             this.shader.bindAttribute( value.buffer, value.attribute, value.dimension )
         }

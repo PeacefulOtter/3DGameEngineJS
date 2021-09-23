@@ -27,7 +27,8 @@ class OBJLoader {
             let dataFloat = data.map(parseFloat)
 
             if ( keyword === "v" )
-                positions.push( dataFloat )
+                positions.push( normalize(dataFloat, false) )
+
             else if ( keyword === "vt" )
                 textures.push( [dataFloat[0], 1.0 - dataFloat[1]] )
             else if ( keyword === "vn" )

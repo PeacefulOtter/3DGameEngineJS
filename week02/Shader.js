@@ -2,7 +2,7 @@
 "use strict"
 
 
-
+// TODO: remove the two types of shaders -> make only one
 class Shader {
 
     /**

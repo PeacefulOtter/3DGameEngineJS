@@ -21,20 +21,21 @@ class Camera {
 
     move =  ( key ) => {
         switch (key) {
-            case keys[0]:
-                this.transform.translate(0, 0, -0.1)
+            case Camera.keys[0]:
+                this.transform.translate(0, 0, -0.05)
                 break;
-            case keys[1]:
-                this.transform.translate(0.1, 0, 0)
+            case Camera.keys[1]:
+                this.transform.translate(0.03, 0, 0)
                 break;
-            case keys[2]:
-                this.transform.translate(0, 0, 0.1)
+            case Camera.keys[2]:
+                this.transform.translate(0, 0, 0.05)
                 break;
-            case keys[3]:
-                this.transform.translate(-0.1, 0, 0)
+            case Camera.keys[3]:
+                this.transform.translate(-0.03, 0, 0)
                 break;
             default:
                 break;
         }
+        console.log(this.transform.translation.vec());
     }
 }

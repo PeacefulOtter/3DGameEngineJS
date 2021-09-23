@@ -34,7 +34,6 @@ class KeyHandler
     }
 
     static handleKeyDown = (e) => {
-        console.log(e);
         let key = e.key; // string representation of the key pressed
 
         // dispatch the key event

@@ -39,7 +39,7 @@ class RawModel {
         console.log("nor", normals);
 
         
-        let material = new Material(textFilename, textExtension );
+        let material = new Material( textFilename, textExtension );
         return new RawModel( positions, textures, normals, material )
     }
 
@@ -49,19 +49,5 @@ class RawModel {
      */
     static _constructWithVertices = ( positions ) => {
         return new RawModel( positions )
-    }:
+    }
 }
-
-
-// export default {
-//     RawModel: {
-//         init: false,
-//         constructor = () => {
-//             this.a = a;
-//         },
-//         create = (blob) => {
-//             console.log(blob);
-            
-//         }
-//     }
-// }
