@@ -40,13 +40,13 @@ class Camera {
     move =  ( key ) => {
         switch (key) {
             case Camera.keys[0]:
-                this.transform.translate(0, 0, -0.05)
+                this.transform.translate(0, 0, 0.05)
                 break;
             case Camera.keys[1]:
                 this.transform.translate(0.03, 0, 0)
                 break;
             case Camera.keys[2]:
-                this.transform.translate(0, 0, 0.05)
+                this.transform.translate(0, 0, -0.05)
                 break;
             case Camera.keys[3]:
                 this.transform.translate(-0.03, 0, 0)
@@ -66,7 +66,10 @@ class Camera {
             default:
                 break;
         }
-        console.log(this.transform.toString());
+        // console.log(this.transform.toString());
+        // console.table(this.getViewMatrix().m);
+        // console.table(this.transform.getTransformationMatrix().m);
+        // console.table(camera.projection.m );
     }
 
     rotateX = ( angleDeg ) => {

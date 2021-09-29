@@ -2,6 +2,9 @@
 "use strict"
 
 class Matrix4f {
+    
+    static MATRIX_SIZE = 4;
+
     /**
      * @param {Float[4][4]} matrixArray 
      */
@@ -47,6 +50,16 @@ class Matrix4f {
         return mat;
     }
 
+    static scale = ( vec ) => {
+        let mat = Matrix4f.identity();
+       
+        mat.m[ 0 ][ 0 ] = vec.x;
+        mat.m[ 1 ][ 1 ] = vec.y;
+        mat.m[ 2 ][ 2 ] = vec.z;
+        
+        return mat;
+    }
+
     /**
      * 
      * @param {Vector3f} f : forward vector
@@ -78,18 +91,28 @@ class Matrix4f {
     mul = ( other ) => {
         let mat = Matrix4f.identity();
 
-        for ( let i = 0; i < 4; i++ )
+        for ( let i = 0; i < Matrix4f.MATRIX_SIZE; i++ )
         {
-            for ( let j = 0; j < 4; j++ )
+            for ( let j = 0; j < Matrix4f.MATRIX_SIZE; j++ )
             {
                 let value = 0;
-                for ( let k = 0; k < 4; k++ )
+                for ( let k = 0; k < Matrix4f.MATRIX_SIZE; k++ )
                 {
                     value += this.m[i][k] * other.m[k][j];
                 }
                 mat.m[i][j] = value;
             }
         }
+        
+        return mat;
+    }
+
+    transpose = () => {
+        let mat = Matrix4f.identity();
+
+        for ( var i = 0; i < Matrix4f.MATRIX_SIZE; ++i )
+            for ( var j = 0; j < Matrix4f.MATRIX_SIZE; ++j )
+                mat.m[i][j] = this.m[j][i];
         
         return mat;
     }

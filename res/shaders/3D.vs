@@ -18,10 +18,10 @@ void main() {
 
     vec4 worldPosition = transformationMatrix * vec4(position, 1.0);
     vec4 positionRelativeToCam = viewMatrix * worldPosition;
-    gl_Position = projectionMatrix * positionRelativeToCam;
+    gl_Position = positionRelativeToCam; // projectionMatrix * positionRelativeToCam;
 
     // vec3 actualPos = position;
     // gl_Position = vec4(actualPos.xyz, 1.0);
 
-    vcolor = vec4(texture.x, texture.y, 0.0, 1.0);
+    vcolor = positionRelativeToCam; // vec4(texture.x, texture.y, 0.0, 1.0);
 }

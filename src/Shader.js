@@ -41,13 +41,13 @@ class Shader {
                     this.setUniformVector3f( value.loc, camera.transform.translation.vec() )
                     break;
                 case "transformationMatrix":
-                    this.setUniformMatrix( value.loc, camera.transform.getTransformationMatrix().m )
+                    this.setUniformMatrix( value.loc, camera.transform.getTransformationMatrix() )
                     break;
                 case "projectionMatrix":
-                    this.setUniformMatrix( value.loc, camera.projection.m )
+                    this.setUniformMatrix( value.loc, camera.projection )
                     break;
                 case "viewMatrix":
-                    this.setUniformMatrix( value.loc, camera.getViewMatrix().m )
+                    this.setUniformMatrix( value.loc, camera.getViewMatrix() )
                     break;
                 default:
                     break;
@@ -138,9 +138,9 @@ class Shader {
 
     /**
      * @param {glLocation} loc 
-     * @param {Matrix4f.m} value 
+     * @param {Matrix4f} value 
      */
     setUniformMatrix = ( loc, value ) => {
-        gl.uniformMatrix4fv( loc, false, flatten(value) ); // FIXME: flip buffer????
+        gl.uniformMatrix4fv( loc, false, flatten(value.transpose().m) ); // FIXME: flip buffer????
     }
 } 

@@ -17,7 +17,7 @@ class Quaternion {
      * @returns {Quaternion} Rotation quaternion
      */
     static _createFromVec = ( axis, angleDeg ) => {
-        let halfRadAngle = angleDeg * (Math.PI / 180) / 2;
+        let halfRadAngle = radians( angleDeg ) / 2;
         let cosHalfAngle = Math.cos( halfRadAngle );
         let sinHalfAngle = Math.sin( halfRadAngle );
 

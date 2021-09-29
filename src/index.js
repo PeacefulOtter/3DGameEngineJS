@@ -14,21 +14,22 @@ let init = () => {
     let model = RawModel._constructWithOBJ( "sphere.obj", "brick", ".jpg" )
     let shader = new Shader( "3D.vs", "3D.fs" )
     renderer = new Renderer3D( model, shader )
+    renderer.transform.scale(0.3) 
 
     camera = new Camera(0, 0, 0.5);
 
     gl.clearColor(1,0, 0, 0.2);
     
     
-    // gl.frontFace( gl.CW ); BREAKS EVERYTHING
+    // gl.frontFace( gl.CW ); // not needed i thinkq
     /* enableCulling */
     gl.enable( gl.CULL_FACE );
     gl.cullFace( gl.BACK );
     // disable culling: glDisable( GL_CULL_FACE );
 
     gl.enable( gl.DEPTH_TEST );
-    // gl.enable( gl.DEPTH_CLAMP ); default?
-    // gl.enable( gl.TEXTURE_2D ); default?
+    // gl.enable( gl.DEPTH_CLAMP ); // default?
+    // gl.enable( gl.TEXTURE_2D ); // default?
 
 
     // USED FOR INDICES
@@ -55,7 +56,7 @@ let render = () => {
         point.render()
     });
 
-    window.requestAnimationFrame(render)
+    true ? window.requestAnimationFrame(render) : setTimeout(render, 1000)
 }
 
 window.onload = () => {

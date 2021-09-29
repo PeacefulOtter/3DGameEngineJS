@@ -7,7 +7,13 @@ class Transform
     {
         this.translation = new Vector3f(0, 0, 0);
         this.rotation = new Quaternion(0, 0, 0, 1);
+        this.scaling = new Vector3f(1, 1, 1);
     }
+
+    scale = (amount) => {
+        this.scaling = this.scaling.mul( amount );
+    }
+
 
     translate = (x, y, z) => {
         this.translation = this.translation.add(x, y, z)
@@ -46,8 +52,13 @@ class Transform
         return this.rotation.toRotationMatrix()
     }
 
+    // TODO: use js to decompose
+    getScaleMatrix = () => {
+        return Matrix4f.scale( this.scaling );
+    }
+
     getTransformationMatrix = () => {
-        return this.getTranslationMatrix().mul( this.getRotationMatrix() ) // .mul( scale.getScaleMatrix() ) );
+        return this.getTranslationMatrix().mul( this.getRotationMatrix().mul( this.getScaleMatrix() ) );
     }
 
 
