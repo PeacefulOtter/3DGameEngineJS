@@ -10,6 +10,9 @@ class Renderer2D extends Renderer
         
         this.color = [vec4(1, 0, 1, 1), vec4(0, 0, 1, 1), vec4(1, 0, 0, 1)];
 
+        shader.addUniform("translation", "vec3")
+        shader.addUniform("cameraTranslation", "vec3")
+
         shader.addAttribute( "position", model.positions, 2 )
         shader.addAttribute( "color", this.color, 4 )
         

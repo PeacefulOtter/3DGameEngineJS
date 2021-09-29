@@ -2,8 +2,9 @@
 "use strict"
 
 
-// TODO: remove the two types of shaders -> make only one
 class Shader {
+
+    static PATH = "../res/shaders/";
 
     /**
      * 
@@ -11,13 +12,9 @@ class Shader {
      * @param {String} fragmentFile 
      */
     constructor( vertexFile, fragmentFile ) {
-        this.program = initShaders(gl, vertexFile, fragmentFile )
+        this.program = initShaders(gl, Shader.PATH + vertexFile, Shader.PATH + fragmentFile )
         this.attributes = {}
         this.uniforms = {};
-
-        // TODO: make this auto
-        this.addUniform("translation", "vec3")
-        this.addUniform("cameraTranslation", "vec3")
     }
 
 
@@ -35,13 +32,22 @@ class Shader {
         {
             switch (key) {
                 case "diffuse":
-                    // this.setUniformF( value.loc, model.texture )
+                    this.setUniformF( value.loc, model.material.diffuse )
                     break;
                 case "translation":
                     this.setUniformVector3f( value.loc, transform.translation.vec() )
                     break;
                 case "cameraTranslation":
                     this.setUniformVector3f( value.loc, camera.transform.translation.vec() )
+                    break;
+                case "transformationMatrix":
+                    this.setUniformMatrix( value.loc, camera.transform.getTransformationMatrix().m )
+                    break;
+                case "projectionMatrix":
+                    this.setUniformMatrix( value.loc, camera.projection.m )
+                    break;
+                case "viewMatrix":
+                    this.setUniformMatrix( value.loc, camera.getViewMatrix().m )
                     break;
                 default:
                     break;
@@ -133,8 +139,12 @@ class Shader {
      * @param {String} uniformName 
      * @param {vec3} value 
      */
-     setUniformVector3f = ( loc, value ) =>
-     {
-        gl.uniform3f( loc, value[0], value[1], value[2] );
-     }
+    setUniformVector3f = ( loc, value ) =>
+    {
+    gl.uniform3f( loc, value[0], value[1], value[2] );
+    }
+
+    setUniformMatrix = ( loc, value ) => {
+        gl.uniformMatrix4fv( loc, false, flatten(value) ); // FIXME: flip buffer????
+    }
 } 

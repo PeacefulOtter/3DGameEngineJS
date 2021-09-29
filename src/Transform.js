@@ -24,4 +24,16 @@ class Transform
     setRotation = (x, y, z, w) => {
         this.rotation = new Quaternion(x, y, z, w)
     }
+
+    getTranslationMatrix = () => {
+        return Matrix4f.translation( this.translation.x, this.translation.y, this.translation.z );
+    }
+
+    getRotationMatrix = () => {
+        return this.rotation.toRotationMatrix()
+    }
+
+    getTransformationMatrix = () => {
+        return this.getTranslationMatrix().mul( this.getRotationMatrix() ) // .mul( scale.getScaleMatrix() ) );
+    }
 }

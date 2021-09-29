@@ -15,6 +15,9 @@ class Renderer3D extends Renderer {
         }*/
 
         shader.addUniform( "diffuse", "1i" )
+        shader.addUniform( "transformationMatrix", "mat" )
+        shader.addUniform( "projectionMatrix", "mat" )
+        shader.addUniform( "viewMatrix", "mat" )
 
         shader.addAttribute( "position", model.positions, 3 )
         shader.addAttribute( "texture", model.textures, 2 )

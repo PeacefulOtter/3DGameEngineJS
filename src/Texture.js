@@ -19,7 +19,10 @@ class Texture {
      * @param {String} filename
      */
     static _constructWithFilename = ( filename ) => {
-        // TODO: test if exisiting 
+        let resource = Texture.textureResource[filename];
+        if ( resource != undefined )
+            return new Texture( resource );
+
         const texture = gl.createTexture(); // not a buffer but an id
         gl.bindTexture(gl.TEXTURE_2D, texture);
 
