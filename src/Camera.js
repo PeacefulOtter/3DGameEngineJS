@@ -52,28 +52,28 @@ class Camera {
                 this.transform.translate(-0.03, 0, 0)
                 break;
             case Camera.keys[4]:
-                this.transform.rotate()
+                this.rotateX(-3)
                 break;
             case Camera.keys[5]:
-                this.transform.rotate()
+                this.rotateY(3)
                 break;
             case Camera.keys[6]:
-                this.transform.rotate()
+                this.rotateX(3)
                 break;
             case Camera.keys[7]:
-                this.transform.rotate()
+                this.rotateY(-3)
                 break;
             default:
                 break;
         }
-        console.log(this.transform.translation.vec());
+        console.log(this.transform.toString());
     }
 
     rotateX = ( angleDeg ) => {
-        this.transform.rotate( this.transform.rotation.getRight(), angleDeg );
+        this.transform.rotateAngle( this.transform.rotation.getRight(), angleDeg );
     }
 
     rotateY = ( angleDeg ) => {
-        this.transform.rotate( Camera.Y_AXIS, angleDeg );
+        this.transform.rotateAngle( Camera.Y_AXIS, angleDeg );
     }
 }

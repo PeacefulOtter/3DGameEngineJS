@@ -11,10 +11,38 @@ class Quaternion {
     }
 
     /**
+     * 
+     * @param {Vector3f} axis 
+     * @param {float} angleDeg 
+     * @returns {Quaternion} Rotation quaternion
+     */
+    static _createFromVec = ( axis, angleDeg ) => {
+        let halfRadAngle = angleDeg * (Math.PI / 180) / 2;
+        let cosHalfAngle = Math.cos( halfRadAngle );
+        let sinHalfAngle = Math.sin( halfRadAngle );
+
+        let x = axis.x * sinHalfAngle;
+        let y = axis.y * sinHalfAngle;
+        let z = axis.z * sinHalfAngle;
+        let w = cosHalfAngle;
+
+        return new Quaternion(x, y, z, w);
+    }
+
+    /**
      * @returns {Quaternion} conjugate this
      */
     conjugate = () => {
         return new Quaternion( -this.x, -this.y, -this.z, this.w)
+    }
+
+    /**
+     * 
+     * @param {Quaternion} quat 
+     * @returns {Quaternion} rotated quaternion
+     */
+    rotate = ( quat ) => {
+        return quat.mulQuat( this )
     }
 
     /**
@@ -36,4 +64,30 @@ class Quaternion {
     getDown = () =>    { return new Vector3f(  0, -1,  0 ).rotate( this ); }
     getRight = () =>   { return new Vector3f(  1,  0,  0 ).rotate( this ); }
     getLeft = () =>    { return new Vector3f( -1,  0,  0 ).rotate( this ); }
+
+    mulQuat = ( other ) => {
+        let x = this.x; let y = this.y; let z = this.z; let w = this.w;
+
+        let x_ = x * other.w + w * other.x + y * other.z - z * other.y;
+        let y_ = y * other.w + w * other.y + z * other.x - x * other.z;
+        let z_ = z * other.w + w * other.z + x * other.y - y * other.x;
+        let w_ = w * other.w - x * other.x - y * other.y - z * other.z;
+        
+        return new Quaternion( x_, y_, z_, w_ );
+    }
+
+    mulVec = ( other ) => {
+        let x = this.x; let y = this.y; let z = this.z; let w = this.w;
+
+        let x_ =  w * other.x + y * other.z - z * other.y;
+        let y_ =  w * other.y + z * other.x - x * other.z;
+        let z_ =  w * other.z + x * other.y - y * other.x;
+        let w_ = -x * other.x - y * other.y - z * other.z;
+        
+        return new Quaternion( x_, y_, z_, w_ );
+    }
+
+    vec = () => { return vec4(this.x, this.y, this.z, this.w); }
+
+    toString = () => { return this.vec() }
 }

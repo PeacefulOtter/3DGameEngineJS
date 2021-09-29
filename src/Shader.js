@@ -105,45 +105,41 @@ class Shader {
 
 
     /**
-     * 
-     * @param {String} uniformName 
+     * @param {glLocation} loc 
      * @param {float} value 
      */
-    setUniformF( loc, value )
-    {
+    setUniformF = ( loc, value ) => {
         gl.uniform1f( loc, value );
     }
 
     /**
-     * 
-     * @param {String} uniformName 
+     * @param {glLocation} loc 
      * @param {int} value 
      */
-     setUniformI( loc, value )
-     {
+     setUniformI = ( loc, value ) => {
          gl.uniform1i( loc, value );
      }
 
     /**
-     * 
-     * @param {String} uniformName 
+     * @param {glLocation} loc 
      * @param {vec2} value 
      */
-    setUniformVector2f = ( loc, value ) =>
-    {
+    setUniformVector2f = ( loc, value ) => {
         gl.uniform2f( loc, value[0], value[1] );
     }
 
     /**
-     * 
-     * @param {String} uniformName 
+     * @param {glLocation} loc 
      * @param {vec3} value 
      */
-    setUniformVector3f = ( loc, value ) =>
-    {
-    gl.uniform3f( loc, value[0], value[1], value[2] );
+    setUniformVector3f = ( loc, value ) => {
+        gl.uniform3f( loc, value[0], value[1], value[2] );
     }
 
+    /**
+     * @param {glLocation} loc 
+     * @param {Matrix4f.m} value 
+     */
     setUniformMatrix = ( loc, value ) => {
         gl.uniformMatrix4fv( loc, false, flatten(value) ); // FIXME: flip buffer????
     }

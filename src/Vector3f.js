@@ -20,6 +20,26 @@ class Vector3f {
         return new Vector3f(this.x + x, this.y + y, this.z + z);
     }
 
+
+    /**
+     * @param {Float} amount 
+     */
+    mul = ( amount ) => {
+        return new Vector3f( amount * this.x, amount * this.y, amount * this.z );
+    }
+
+    /**
+     * @param {Quaternion} quat: rotation quaternion 
+     * @returns {Vector3f} Rotated vector
+     */
+    rotate = ( quat ) => {
+        let conjugate = quat.conjugate();
+        let temp = quat.mulVec( this );
+        let w = temp.mulQuat( conjugate );
+
+        return new Vector3f( w.x, w.y, w.z );
+    }
+
     xy = () => {
         return vec2(this.x, this.y);
     }
@@ -28,7 +48,5 @@ class Vector3f {
         return vec3(this.x, this.y, this.z);
     }
 
-    mul = ( amount ) => {
-        return new Vector3f( amount * this.x, amount * this.y, amount * this.z );
-    }
+    toString = () => { return this.vec() }
 }

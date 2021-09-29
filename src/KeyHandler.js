@@ -19,7 +19,7 @@ class KeyHandler
         let canvasX = x / halfSize - 1;
         let canvasY = -(y / halfSize - 1)
 
-        let vertices = [ vec2(0.0, 0.5), vec2(-0.5, -0.5), vec2(0.5, -0.5) ];
+        let vertices = [ vec3(0.0, 0.5, -0.5), vec3(-0.5, -0.5, -0.5), vec3(0.5, -0.5, -0.5) ];
         vertices[0][0] += canvasX
         vertices[1][0] += canvasX
         vertices[2][0] += canvasX
@@ -35,7 +35,7 @@ class KeyHandler
 
     static handleKeyDown = (e) => {
         let key = e.key; // string representation of the key pressed
-
+        
         // dispatch the key event
         if ( Camera.keys.includes(key) )
             camera.move( key )
