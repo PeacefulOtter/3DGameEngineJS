@@ -18,7 +18,7 @@ void main() {
 
     vec4 worldPosition = transformationMatrix * vec4(position, 1.0);
     vec4 positionRelativeToCam = viewMatrix * worldPosition;
-    gl_Position = positionRelativeToCam; // projectionMatrix * positionRelativeToCam;
+    gl_Position = projectionMatrix * positionRelativeToCam;
 
     // vec3 actualPos = position;
     // gl_Position = vec4(actualPos.xyz, 1.0);

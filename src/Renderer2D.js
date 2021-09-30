@@ -18,21 +18,15 @@ class Renderer2D extends Renderer
 
         shader.addAttribute( "position", model.positions, 3 )
         // shader.addAttribute( "color", this.color, 4 )
-        
-        // dummy stuff
-        this.aim = vec2(0, 0);
-    }
-
-
-    setAim = (x, y) => {
-        this.aim = vec2(x, y);
+    
+        this.transform.translate(0, 0, 2);
     }
 
     update = () => {
         // UPDATE AN ATTRIBUTE
-        this.color[0] = add(this.color[0], vec4(0, 0.005, 0, 0))
-        this.color[1] = add(this.color[1], vec4(0, 0.005, 0, 0))
-        this.color[2] = add(this.color[2], vec4(0, 0.005, 0, 0))
+        // this.color[0] = add(this.color[0], vec4(0, 0.005, 0, 0))
+        // this.color[1] = add(this.color[1], vec4(0, 0.005, 0, 0))
+        // this.color[2] = add(this.color[2], vec4(0, 0.005, 0, 0))
         // gl.bindBuffer(gl.ARRAY_BUFFER, this.shader.attributes["color"].buffer)
         // gl.bufferData(gl.ARRAY_BUFFER, flatten(this.color), gl.STATIC_DRAW);
 

@@ -45,7 +45,7 @@ class Transform
     }
 
     getTranslationMatrix = () => {
-        return Matrix4f.translation( this.translation.x, this.translation.y, this.translation.z );
+        return Matrix4f.translation( this.translation );
     }
 
     getRotationMatrix = () => {
@@ -63,6 +63,6 @@ class Transform
 
 
     toString = () => {
-        return "Translation: \t" + this.translation.vec() + "\nRotation: \t" + this.rotation.vec()
+        return "Translation: \t" + this.translation.vec() + "\nRotation: \t" + this.rotation.vec() + "\nScale: \t" + this.scaling.vec()
     }
 }

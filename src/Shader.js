@@ -34,14 +34,8 @@ class Shader {
                 case "diffuse":
                     this.setUniformF( value.loc, model.material.diffuse )
                     break;
-                case "translation":
-                    this.setUniformVector3f( value.loc, transform.translation.vec() )
-                    break;
-                case "cameraTranslation":
-                    this.setUniformVector3f( value.loc, camera.transform.translation.vec() )
-                    break;
                 case "transformationMatrix":
-                    this.setUniformMatrix( value.loc, camera.transform.getTransformationMatrix() )
+                    this.setUniformMatrix( value.loc, transform.getTransformationMatrix() )
                     break;
                 case "projectionMatrix":
                     this.setUniformMatrix( value.loc, camera.projection )

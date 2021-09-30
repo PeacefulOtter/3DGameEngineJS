@@ -27,7 +27,7 @@ class Matrix4f {
     static perspective = (fov, aspectRatio, zNear, zFar) => {
         let mat = Matrix4f.identity();
 
-        let invTanHalfFov = 1.0 / Math.tan( fov * (Math.PI / 180) / 2 );
+        let invTanHalfFov = 1.0 / Math.tan( radians(fov) / 2 );
         let depth = zNear - zFar;
 
         mat.m[ 0 ][ 0 ] = invTanHalfFov * ( 1.0 / aspectRatio );
@@ -40,12 +40,12 @@ class Matrix4f {
         return mat;
     }
 
-    static translation = ( x, y, z ) => {
+    static translation = ( vec ) => {
         let mat = Matrix4f.identity();
 
-        mat.m[ 0 ][ 3 ] = x;
-        mat.m[ 1 ][ 3 ] = y;
-        mat.m[ 2 ][ 3 ] = z;
+        mat.m[ 0 ][ 3 ] = vec.x;
+        mat.m[ 1 ][ 3 ] = vec.y;
+        mat.m[ 2 ][ 3 ] = vec.z;
         
         return mat;
     }

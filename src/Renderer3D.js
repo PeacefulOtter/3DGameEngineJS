@@ -24,7 +24,7 @@ class Renderer3D extends Renderer {
         // shader.addAttribute( "normal", model.normals, 3 )
         // shader.addAttribute( "color", this.color, 4 )
 
-        this.transform.translate(0, 0, -1.5);
+        this.transform.translate(0, 0, 2);
 
         // this.mesh = new Mesh( model )
     }

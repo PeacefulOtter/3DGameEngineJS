@@ -11,6 +11,8 @@ class KeyHandler
         LEFT: "q",
     }
 
+    static keyPressed = []
+
     static handleClick = (e) => {
         let rect = e.target.getBoundingClientRect();
         let x = e.clientX - rect.left; // x position within the element.
@@ -19,7 +21,7 @@ class KeyHandler
         let canvasX = x / halfSize - 1;
         let canvasY = -(y / halfSize - 1)
 
-        let vertices = [ vec3(0.0, 0.5, -0.5), vec3(-0.5, -0.5, -0.5), vec3(0.5, -0.5, -0.5) ];
+        let vertices = [ vec3(0.0, 0.5, 0), vec3(-0.5, -0.5, 0), vec3(0.5, -0.5, 0) ];
         vertices[0][0] += canvasX
         vertices[1][0] += canvasX
         vertices[2][0] += canvasX
@@ -39,6 +41,10 @@ class KeyHandler
         // dispatch the key event
         if ( Camera.keys.includes(key) )
             camera.move( key )
+    }
+
+    static handleKeyUp = (e) => {
+        
     }
 
 }

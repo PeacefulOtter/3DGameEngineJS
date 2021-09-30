@@ -14,7 +14,7 @@ let init = () => {
     let model = RawModel._constructWithOBJ( "sphere.obj", "brick", ".jpg" )
     let shader = new Shader( "3D.vs", "3D.fs" )
     renderer = new Renderer3D( model, shader )
-    renderer.transform.scale(0.3) 
+    renderer.transform.scale(0.5) 
 
     camera = new Camera(0, 0, 0.5);
 

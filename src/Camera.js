@@ -27,13 +27,15 @@ class Camera {
         this.transform = new Transform()
         this.transform.setTranslation(x, y, z)
         this.projection = Matrix4f.perspective( Camera.FOV, Camera.ASPECT_RATIO, Camera.Z_NEAR, Camera.Z_FAR );
+        console.table(this.projection.m);
     }
 
+    // TODO: not request this for every object!!!!
     getViewMatrix = () =>
     {
         let pos = this.transform.translation.mul( -1 );
         let cameraRotation = this.transform.rotation.conjugate().toRotationMatrix();
-        let cameraTranslation = Matrix4f.translation( pos.x, pos.y, pos.z );
+        let cameraTranslation = Matrix4f.translation( pos );
         return cameraRotation.mul( cameraTranslation );
     }
 
@@ -43,25 +45,25 @@ class Camera {
                 this.transform.translate(0, 0, 0.05)
                 break;
             case Camera.keys[1]:
-                this.transform.translate(0.03, 0, 0)
+                this.transform.translate(0.05, 0, 0)
                 break;
             case Camera.keys[2]:
                 this.transform.translate(0, 0, -0.05)
                 break;
             case Camera.keys[3]:
-                this.transform.translate(-0.03, 0, 0)
+                this.transform.translate(-0.05, 0, 0)
                 break;
             case Camera.keys[4]:
                 this.rotateX(-3)
                 break;
             case Camera.keys[5]:
-                this.rotateY(3)
+                this.rotateY(-3)
                 break;
             case Camera.keys[6]:
                 this.rotateX(3)
                 break;
             case Camera.keys[7]:
-                this.rotateY(-3)
+                this.rotateY(3)
                 break;
             default:
                 break;
