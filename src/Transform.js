@@ -27,7 +27,7 @@ class Transform
      * 
      * @param {Quaternion} quat 
      */
-    rotate = ( quat ) => {
+    rotateQuat = ( quat ) => {
         this.rotation = this.rotation.rotate( quat );
     }
 
@@ -36,8 +36,8 @@ class Transform
      * @param {Vector3f} vec 
      * @param {float} angleDeg 
      */
-    rotateAngle = (vec, angleDeg) => {
-        this.rotate( Quaternion._createFromVec( vec, angleDeg ) )
+    rotateVec = (vec, angleDeg) => {
+        this.rotateQuat( Quaternion._createFromVec( vec, angleDeg ) )
     }
 
     setRotation = (x, y, z, w) => {

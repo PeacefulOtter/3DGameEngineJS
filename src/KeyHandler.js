@@ -11,7 +11,7 @@ class KeyHandler
         LEFT: "q",
     }
 
-    static keyPressed = []
+    static keyPressed = new Set()
 
     static handleClick = (e) => {
         let rect = e.target.getBoundingClientRect();
@@ -35,16 +35,20 @@ class KeyHandler
         points.push(point)
     }
 
-    static handleKeyDown = (e) => {
+    static handleKeyPress = (e) => {
         let key = e.key; // string representation of the key pressed
-        
-        // dispatch the key event
-        if ( Camera.keys.includes(key) )
-            camera.move( key )
+        KeyHandler.keyPressed = KeyHandler.keyPressed.add(key)
     }
 
     static handleKeyUp = (e) => {
-        
+        KeyHandler.keyPressed.delete(e.key)
     }
 
+    static update = (deltaTime) => {
+        // dispatch the key event
+        KeyHandler.keyPressed.forEach(key => {
+            if ( Camera.keys.includes(key) )
+                camera.move( key )
+        });  
+    }
 }

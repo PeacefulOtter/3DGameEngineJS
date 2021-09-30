@@ -3,6 +3,8 @@
 
 class Vector3f {
 
+    static Y_AXIS = new Vector3f( 0, 1, 0 );
+
     /**
      * 
      * @param {float} x 

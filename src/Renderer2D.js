@@ -20,6 +20,7 @@ class Renderer2D extends Renderer
         // shader.addAttribute( "color", this.color, 4 )
     
         this.transform.translate(0, 0, 2);
+        this.transform.rotateVec(Vector3f.Y_AXIS, 180)
     }
 
     update = () => {

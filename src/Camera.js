@@ -8,8 +8,6 @@ class Camera {
     static Z_NEAR = 0.01;
     static Z_FAR = 5000;
 
-    static Y_AXIS = new Vector3f( 0, 1, 0 );
-
     // TODO: Make this generic
     static keys = [ 
         "z", 
@@ -19,7 +17,9 @@ class Camera {
         "ArrowUp",
         "ArrowRight",
         "ArrowDown",
-        "ArrowLeft"
+        "ArrowLeft",
+        "Shift",
+        "space"
     ]
 
     constructor(x, y, z)
@@ -27,7 +27,6 @@ class Camera {
         this.transform = new Transform()
         this.transform.setTranslation(x, y, z)
         this.projection = Matrix4f.perspective( Camera.FOV, Camera.ASPECT_RATIO, Camera.Z_NEAR, Camera.Z_FAR );
-        console.table(this.projection.m);
     }
 
     // TODO: not request this for every object!!!!
@@ -65,6 +64,12 @@ class Camera {
             case Camera.keys[7]:
                 this.rotateY(3)
                 break;
+            case Camera.keys[8]:
+                this.transform.translate(0, -0.05, 0);
+                break;
+            case Camera.keys[9]:
+                this.transform.translate(0, 0.5, 0);
+                break;
             default:
                 break;
         }
@@ -75,10 +80,10 @@ class Camera {
     }
 
     rotateX = ( angleDeg ) => {
-        this.transform.rotateAngle( this.transform.rotation.getRight(), angleDeg );
+        this.transform.rotateVec( this.transform.rotation.getRight(), angleDeg );
     }
 
     rotateY = ( angleDeg ) => {
-        this.transform.rotateAngle( Camera.Y_AXIS, angleDeg );
+        this.transform.rotateVec( Vector3f.Y_AXIS, angleDeg );
     }
 }

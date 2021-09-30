@@ -21,7 +21,7 @@ let init = () => {
     gl.clearColor(1,0, 0, 0.2);
     
     
-    // gl.frontFace( gl.CW ); // not needed i thinkq
+    gl.frontFace( gl.CW ); // not needed i thinkq
     /* enableCulling */
     gl.enable( gl.CULL_FACE );
     gl.cullFace( gl.BACK );
@@ -45,7 +45,20 @@ let init = () => {
     gl.bufferData(gl.ARRAY_BUFFER, 16*100, gl.STATIC_DRAW);*/
 }
 
-let render = () => {
+let currentTime = undefined;
+let deltaTime = 0;
+
+let render = (a) => {
+    // UPDATE
+    if ( currentTime === undefined )
+        currentTime = a;
+    else {
+        deltaTime = a - currentTime;
+        currentTime = a;
+    }
+    KeyHandler.update(deltaTime)
+
+    // RENDER
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
     renderer.update()
@@ -66,7 +79,8 @@ window.onload = () => {
     
     init()
 
-    document.onkeydown = (e) => { KeyHandler.handleKeyDown( e ) }
+    document.onkeydown = (e) => { KeyHandler.handleKeyPress( e ) }
+    document.onkeyup    =   (e) => { KeyHandler.handleKeyUp( e ) }
     canvas.onclick = (e) => { KeyHandler.handleClick( e ) }
     
     
