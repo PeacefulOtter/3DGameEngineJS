@@ -11,14 +11,15 @@ class Texture {
      * DO NOT CREATE AN INSTANCE OF THIS CLASS USING THE CONSTRUCTOR
      * @param {int} textureID
      */
-    constructor( textureID ) {
-        this.id = textureID        
+    constructor( textureID, samplerSlot ) {
+        this.id = textureID;
+        this.samplerSlot = samplerSlot;      
     }
 
     /***
      * @param {String} filename
      */
-    static _constructWithFilename = ( filename ) => {
+    static _constructWithFilename = ( filename, samplerSlot ) => {
         let resource = Texture.textureResource[filename];
         if ( resource != undefined )
             return new Texture( resource );
@@ -41,22 +42,16 @@ class Texture {
     
             // }
     
-        
-            // gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA,
-            //    1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE,
-            //    buffer );
-    
             gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
         }
 
         Texture.textureResource[ filename ] = texture;
-        return new Texture(texture);
+        return new Texture(texture, samplerSlot);
     }
  
 
-    bind = ( loc, samplerSlot ) => {
-        gl.activeTexture(gl.TEXTURE0 + samplerSlot);
+    bind = () => {
+        gl.activeTexture(gl.TEXTURE0); // + this.samplerSlot
         gl.bindTexture(gl.TEXTURE_2D, this.texture);
-        gl.uniform1i(loc, samplerSlot); // programInfo.uniformLocations.uSampler
     }
 }

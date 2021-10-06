@@ -23,7 +23,6 @@ class Shader {
     }
 
     /**
-     * FIXME: NEEDS TO BE MORE GENERIC ===========
      * FIXME: camera as argument to avoid var
      * @param {Transform} transform 
      */
@@ -32,7 +31,8 @@ class Shader {
         {
             switch (key) {
                 case "diffuse":
-                    this.setUniformF( value.loc, model.material.diffuse )
+                    model.material.diffuse.bind()
+                    this.setUniformI( value.loc, model.material.diffuse.samplerSlot )
                     break;
                 case "transformationMatrix":
                     this.setUniformMatrix( value.loc, transform.getTransformationMatrix() )
@@ -56,9 +56,7 @@ class Shader {
      * @param {int} dimension: dimension of each element in buffer
      */
     addAttribute = ( attributeName, bufferData, dimension ) => {
-        console.log(attributeName, bufferData);
         let data = flatten(bufferData)
-        console.log("Adding attribute", attributeName, "with data: \n", data);
         
         let buffer = gl.createBuffer();
         gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
@@ -79,6 +77,7 @@ class Shader {
         };
         
         gl.bindAttribLocation( this.program, loc, attributeName );
+        console.log("Added attribute", attributeName, "with data: \n", data);
     }
 
     bindAttribute = ( buffer, attribute, dimension ) => {
@@ -94,7 +93,7 @@ class Shader {
     addUniform = (uniformName, uniformType) => {
         let loc = gl.getUniformLocation(this.program, uniformName)
         this.uniforms[ uniformName ] = { "loc": loc, "type": uniformType };
-        console.log(uniformName, this.uniforms[ uniformName ]);
+        console.log("Added uniform: ", uniformName, this.uniforms[ uniformName ]);
     }
 
 
@@ -135,6 +134,6 @@ class Shader {
      * @param {Matrix4f} value 
      */
     setUniformMatrix = ( loc, value ) => {
-        gl.uniformMatrix4fv( loc, false, flatten(value.transpose().m) ); // FIXME: flip buffer????
+        gl.uniformMatrix4fv( loc, false, flatten(value.transpose().m) );
     }
 } 

@@ -19,16 +19,25 @@ class Renderer {
         this.draw()
     }
 
-    draw () {
-        for (const [key, value] of Object.entries(this.shader.attributes)) {
+    enableAttribs() {
+        for ( const [key, value] of Object.entries(this.shader.attributes) ) 
+        {
+            // console.log(key, value);
             this.shader.bindAttribute( value.buffer, value.attribute, value.dimension )
         }
+    }
 
-        gl.drawArrays( gl.TRIANGLES, 0, this.vertexCount );
-
-        for (const [key, value] of Object.entries(this.shader.attributes)) {
+    disableAttribs () {
+        for ( const [key, value] of Object.entries(this.shader.attributes) )
+        {
             gl.disableVertexAttribArray( value.attribute );
         }
+    }
+
+    draw () {
+        this.enableAttribs()
+        gl.drawArrays( gl.TRIANGLES, 0, this.vertexCount );
+        this.disableAttribs()
     }
 }
  

@@ -73,10 +73,6 @@ class Camera {
             default:
                 break;
         }
-        // console.log(this.transform.toString());
-        // console.table(this.getViewMatrix().m);
-        // console.table(this.transform.getTransformationMatrix().m);
-        // console.table(camera.projection.m );
     }
 
     translateX = (sign) => {

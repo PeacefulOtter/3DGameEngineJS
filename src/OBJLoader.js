@@ -3,6 +3,12 @@
 
 class OBJLoader {
 
+    static parse = ( filename ) => {
+        let obj = new OBJDoc( '../res/models/' + filename )
+        obj.parse(loadFileAJAX( '../res/models/' + filename ), 1, false)
+        return obj
+    }
+
     static loadFile = ( filename )  => {   
         let positions = []
         let textures = []

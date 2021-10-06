@@ -9,10 +9,6 @@
 class Renderer3D extends Renderer {
     constructor(model, shader) {
         super( model, shader )
-        /*this.color = [];
-        for (let i = 0; i < model.positions.length * 3; i++) {
-            this.color.push(vec4(Math.random(), Math.random(), Math.random(), 1))            
-        }*/
 
         shader.addUniform( "diffuse", "1i" )
         shader.addUniform( "transformationMatrix", "mat" )
@@ -20,13 +16,11 @@ class Renderer3D extends Renderer {
         shader.addUniform( "viewMatrix", "mat" )
 
         shader.addAttribute( "position", model.positions, 3 )
-        shader.addAttribute( "texture", model.textures, 2 )
+        // shader.addAttribute( "texture", model.textures, 2 )
         // shader.addAttribute( "normal", model.normals, 3 )
         // shader.addAttribute( "color", this.color, 4 )
 
         this.transform.translate(0, 0, 2);
-
-        // this.mesh = new Mesh( model )
     }
     
 
@@ -39,9 +33,13 @@ class Renderer3D extends Renderer {
 
 
     draw = () => {
-        this.model.material.diffuse.bind(this.shader.uniforms[ "diffuse" ].loc, 0)
-        Renderer.prototype.draw.call(this)
+        // Renderer.prototype.draw.call(this)
+        Renderer.prototype.enableAttribs.call(this);
+        
+        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.model.indexBuffer);
+        gl.drawElements(gl.TRIANGLES, this.model.indicesLength, gl.UNSIGNED_SHORT, 0);
 
+        Renderer.prototype.disableAttribs.call(this);
     }
 }
 
