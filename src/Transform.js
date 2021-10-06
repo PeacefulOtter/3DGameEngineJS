@@ -14,9 +14,12 @@ class Transform
         this.scaling = this.scaling.mul( amount );
     }
 
-
     translate = (x, y, z) => {
         this.translation = this.translation.add(x, y, z)
+    }
+
+    translateVec = (vec) => {
+        this.translation = this.translation.addVec(vec)
     }
 
     setTranslation = (x, y, z) => {

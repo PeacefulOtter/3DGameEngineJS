@@ -18,23 +18,18 @@ let init = () => {
 
     camera = new Camera(0, 0, 0.5);
 
-    gl.clearColor(1,0, 0, 0.2);
+    gl.clearColor(0, 0, 0.1, 0.12);
     
     
-    gl.frontFace( gl.CW ); // not needed i thinkq
-    /* enableCulling */
-    gl.enable( gl.CULL_FACE );
+    gl.frontFace( gl.CW );
+    gl.enable( gl.CULL_FACE ); // glDisable( GL_CULL_FACE );
     gl.cullFace( gl.BACK );
-    // disable culling: glDisable( GL_CULL_FACE );
-
     gl.enable( gl.DEPTH_TEST );
-    // gl.enable( gl.DEPTH_CLAMP ); // default?
-    // gl.enable( gl.TEXTURE_2D ); // default?
 
 
-    // USED FOR INDICES
-    // var uints_for_indices = gl.getExtension("OES_element_index_uint");
-    // console.log(uints_for_indices);
+    const ext = gl.getExtension("OES_element_index_uint");
+    if ( !ext )
+        console.log('Warning: unable to use an extension');
 
 
 
@@ -82,7 +77,6 @@ window.onload = () => {
     document.onkeydown = (e) => { KeyHandler.handleKeyPress( e ) }
     document.onkeyup    =   (e) => { KeyHandler.handleKeyUp( e ) }
     canvas.onclick = (e) => { KeyHandler.handleClick( e ) }
-    
     
     render()
 };

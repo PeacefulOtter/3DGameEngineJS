@@ -22,6 +22,10 @@ class Vector3f {
         return new Vector3f(this.x + x, this.y + y, this.z + z);
     }
 
+    addVec = (vec) => {
+        return new Vector3f(this.x + vec.x, this.y + vec.y, this.z + vec.z);
+    }
+
 
     /**
      * @param {Float} amount 

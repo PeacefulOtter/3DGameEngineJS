@@ -19,7 +19,7 @@ class Camera {
         "ArrowDown",
         "ArrowLeft",
         "Shift",
-        "space"
+        " "
     ]
 
     constructor(x, y, z)
@@ -41,34 +41,34 @@ class Camera {
     move =  ( key ) => {
         switch (key) {
             case Camera.keys[0]:
-                this.transform.translate(0, 0, 0.05)
+                this.translateZ(1)
                 break;
             case Camera.keys[1]:
-                this.transform.translate(0.05, 0, 0)
+                this.translateX(1)
                 break;
             case Camera.keys[2]:
-                this.transform.translate(0, 0, -0.05)
+                this.translateZ(-1)
                 break;
             case Camera.keys[3]:
-                this.transform.translate(-0.05, 0, 0)
+                this.translateX(-1)
                 break;
             case Camera.keys[4]:
                 this.rotateX(-3)
                 break;
             case Camera.keys[5]:
-                this.rotateY(-3)
+                this.rotateY(3)
                 break;
             case Camera.keys[6]:
                 this.rotateX(3)
                 break;
             case Camera.keys[7]:
-                this.rotateY(3)
+                this.rotateY(-3)
                 break;
             case Camera.keys[8]:
                 this.transform.translate(0, -0.05, 0);
                 break;
             case Camera.keys[9]:
-                this.transform.translate(0, 0.5, 0);
+                this.transform.translate(0, 0.05, 0);
                 break;
             default:
                 break;
@@ -77,6 +77,16 @@ class Camera {
         // console.table(this.getViewMatrix().m);
         // console.table(this.transform.getTransformationMatrix().m);
         // console.table(camera.projection.m );
+    }
+
+    translateX = (sign) => {
+        let right = this.transform.rotation.getRight()
+        this.transform.translateVec( right.mul(0.05 * sign) );
+    }
+
+    translateZ = (sign) => {
+        let front = this.transform.rotation.getForward()
+        this.transform.translateVec( front.mul(0.05 * sign) );
     }
 
     rotateX = ( angleDeg ) => {
