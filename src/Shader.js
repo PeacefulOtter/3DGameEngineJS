@@ -5,16 +5,31 @@
 class Shader {
 
     static PATH = "../res/shaders/";
-
+    static Resource = {};
     /**
      * 
      * @param {String} vertexFile 
      * @param {String} fragmentFile 
      */
-    constructor( vertexFile, fragmentFile ) {
-        this.program = initShaders(gl, Shader.PATH + vertexFile, Shader.PATH + fragmentFile )
-        this.attributes = {}
-        this.uniforms = {};
+    constructor( vertexFile, fragmentFile ) 
+    {
+        let resource = Shader.Resource[vertexFile];
+        if ( resource != undefined )
+        {
+            console.log("using already created shader", vertexFile);
+            this.program = resource.program;
+            this.attributes = resource.attributes;
+        }
+        else
+        {
+            this.program = initShaders(gl, Shader.PATH + vertexFile, Shader.PATH + fragmentFile )
+            this.attributes = {}
+            this.uniforms = {};
+            Shader.Resource[vertexFile] = { program: this.program, attributes: this.attributes };
+            console.log("Creating shader", vertexFile);
+        }
+
+        this.uniforms = {}
     }
 
 
@@ -60,6 +75,9 @@ class Shader {
      * @param {int} dimension: dimension of each element in buffer
      */
     addAttribute = ( attributeName, bufferData, dimension ) => {
+        if ( this.attributes[attributeName] != undefined )
+            return;
+            
         let data = flatten(bufferData)
         
         let buffer = gl.createBuffer();

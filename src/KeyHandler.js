@@ -22,18 +22,16 @@ class KeyHandler
         let canvasY = -(y / halfSize - 1)
 
         let vertices = [ vec3(0.0, 0.5, 0), vec3(-0.5, -0.5, 0), vec3(0.5, -0.5, 0) ];
-        vertices[0][0] += canvasX
-        vertices[1][0] += canvasX
-        vertices[2][0] += canvasX
-        vertices[0][1] += canvasY
-        vertices[1][1] += canvasY
-        vertices[2][1] += canvasY
-
-        const textures = [[vertices[0][0], vertices[0][1]],[vertices[1][0], vertices[1][1]], [vertices[2][0], vertices[2][1]]];
+        const textures = [
+            [vertices[0][0] + canvasX, vertices[0][1] + canvasY],
+            [vertices[1][0] + canvasX, vertices[1][1] + canvasY], 
+            [vertices[2][0] + canvasX, vertices[2][1] + canvasY]];
 
         let m = RawModel._constructWithVertices( vertices, textures, "rock2", ".png" )
         let s = new Shader( "2D.vs", "2D.fs" )
         let point = new Renderer2D( m, s );
+
+        point.transform.translate(canvasX, canvasY, 0)
         point.transform.scale(2);
 
         points.push(point)

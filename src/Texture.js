@@ -6,7 +6,7 @@ function isPowerOf2(length) {
 
 class Texture {
 
-    static textureResource = {}
+    static Resource = {}
     /**
      * DO NOT CREATE AN INSTANCE OF THIS CLASS USING THE CONSTRUCTOR
      * @param {int} textureID
@@ -20,7 +20,7 @@ class Texture {
      * @param {String} filename
      */
     static _constructWithFilename = ( filename, samplerSlot ) => {
-        let resource = Texture.textureResource[filename];
+        let resource = Texture.Resource[filename];
         if ( resource != undefined )
             return new Texture( resource, samplerSlot );
 
@@ -45,7 +45,7 @@ class Texture {
             gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
         }
 
-        Texture.textureResource[ filename ] = texture;
+        Texture.Resource[ filename ] = texture;
         return new Texture(texture, samplerSlot);
     }
  
