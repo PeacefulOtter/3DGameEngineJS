@@ -43,23 +43,29 @@ class RawModel {
         const obj = OBJLoader.parse( objFilename )
         console.log(obj);
         const { vertices, normals, colors, indices } = obj.getDrawingInfo()
-        console.log(vertices, normals, indices);
-
         let v = obj.vertices.map( vertex => [vertex.x, vertex.y, vertex.z])    
+        console.log(textures);
+
         const indexBuffer = gl.createBuffer();
         gl.bindBuffer( gl.ELEMENT_ARRAY_BUFFER, indexBuffer );
         gl.bufferData( gl.ELEMENT_ARRAY_BUFFER, indices, gl.STATIC_DRAW );
 
         let material = new Material( textFilename, textExtension );
         console.log(indices.length, vertices.length, textures.length);
-        return new RawModel( v, textures, normals, material, indexBuffer, indices.length )
+        return new RawModel( v, colors, normals, material, indexBuffer, indices.length )
     }
 
     /**
      * @param {Float[][3]} Array of positions
      * @returns {RawModel} model 
      */
-    static _constructWithVertices = ( positions ) => {
-        return new RawModel( positions )
+    static _constructWithVertices = ( positions, textures, textFilename, textExtension ) => {
+        let material = new Material( textFilename, textExtension );
+        return new RawModel( positions, textures, undefined, material, undefined, undefined );
+    }
+
+
+    addTextCoords = (texCoords) => {
+        this.textures = texCoords;
     }
 }

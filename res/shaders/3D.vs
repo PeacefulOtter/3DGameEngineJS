@@ -20,8 +20,5 @@ void main() {
     vec4 positionRelativeToCam = viewMatrix * worldPosition;
     gl_Position = projectionMatrix * positionRelativeToCam;
 
-    // vec3 actualPos = position;
-    // gl_Position = vec4(actualPos.xyz, 1.0);
-
-    vcolor = positionRelativeToCam; // vec4(texture.x, texture.y, 0.0, 1.0);
+    vcolor = positionRelativeToCam; 
 }

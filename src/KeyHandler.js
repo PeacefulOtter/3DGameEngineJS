@@ -29,7 +29,9 @@ class KeyHandler
         vertices[1][1] += canvasY
         vertices[2][1] += canvasY
 
-        let m = RawModel._constructWithVertices( vertices )
+        const textures = [vec2(0, 1), vec2(0, 0), vec2(1, 1)];
+
+        let m = RawModel._constructWithVertices( vertices, textures, "brick", ".jpg" )
         let s = new Shader( "2D.vs", "2D.fs" )
         let point = new Renderer2D( m, s );
         points.push(point)

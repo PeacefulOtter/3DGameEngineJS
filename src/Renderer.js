@@ -22,7 +22,6 @@ class Renderer {
     enableAttribs() {
         for ( const [key, value] of Object.entries(this.shader.attributes) ) 
         {
-            // console.log(key, value);
             this.shader.bindAttribute( value.buffer, value.attribute, value.dimension )
         }
     }

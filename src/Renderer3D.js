@@ -11,13 +11,15 @@ class Renderer3D extends Renderer {
         super( model, shader )
 
         shader.addUniform( "diffuse", "1i" )
+        shader.addUniform("normalMap", "1i")
+        
         shader.addUniform( "transformationMatrix", "mat" )
         shader.addUniform( "projectionMatrix", "mat" )
         shader.addUniform( "viewMatrix", "mat" )
 
         shader.addAttribute( "position", model.positions, 3 )
-        // shader.addAttribute( "texture", model.textures, 2 )
-        // shader.addAttribute( "normal", model.normals, 3 )
+        shader.addAttribute( "texture", model.textures, 2 )
+        shader.addAttribute( "normal", model.normals, 3 )
         // shader.addAttribute( "color", this.color, 4 )
 
         this.transform.translate(0, 0, 2);

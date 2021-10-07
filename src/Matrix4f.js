@@ -33,7 +33,7 @@ class Matrix4f {
         mat.m[ 0 ][ 0 ] = invTanHalfFov * ( 1.0 / aspectRatio );
         mat.m[ 1 ][ 1 ] = invTanHalfFov;
         mat.m[ 2 ][ 2 ] =  ( -zNear - zFar ) / depth;
-        mat.m[ 2 ][ 3 ] = 2 * zFar * zNear / depth;
+        mat.m[ 2 ][ 3 ] = (2 * zFar * zNear) / depth;
         mat.m[ 3 ][ 2 ] = 1;
         mat.m[ 3 ][ 3 ] = 0;
 

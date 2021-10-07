@@ -7,17 +7,14 @@ class Renderer2D extends Renderer
     constructor( model, shader ) 
     {
         super( model, shader )
-        
-        this.color = [vec4(1, 0, 1, 1), vec4(0, 0, 1, 1), vec4(1, 0, 0, 1)];
 
-        // shader.addUniform("translation", "vec3")
-        // shader.addUniform("cameraTranslation", "vec3")
+        shader.addUniform( "diffuse", "1i" )
         shader.addUniform( "transformationMatrix", "mat" )
         shader.addUniform( "projectionMatrix", "mat" )
         shader.addUniform( "viewMatrix", "mat" )
 
         shader.addAttribute( "position", model.positions, 3 )
-        // shader.addAttribute( "color", this.color, 4 )
+        shader.addAttribute( "texture", model.textures, 2)
     
         this.transform.translate(0, 0, 2);
         this.transform.rotateVec(Vector3f.Y_AXIS, 180)

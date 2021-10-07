@@ -4,7 +4,7 @@
 class Camera {
 
     static FOV = 70.0;
-    static ASPECT_RATIO = 16 / 9.0;
+    static ASPECT_RATIO = 1
     static Z_NEAR = 0.01;
     static Z_FAR = 5000;
 

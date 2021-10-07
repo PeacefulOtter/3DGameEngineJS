@@ -11,10 +11,10 @@ let init = () => {
 
     // let vertices = [ vec2(0.0, 0.5), vec2(-0.5, -0.5), vec2(0.5, -0.5) ];
     // renderer = new Renderer(vertices)
-    let model = RawModel._constructWithOBJ( "alien.obj", "brick", ".jpg" )
+    let model = RawModel._constructWithOBJ( "sphere.obj", "brick", ".jpg" )
     let shader = new Shader( "3D.vs", "3D.fs" )
     renderer = new Renderer3D( model, shader )
-    renderer.transform.scale(0.5)
+    renderer.transform.scale(1)
 
     /*let model2 = RawModel._constructWithOBJ( "cube.obj", "brick", ".jpg" )
     renderer2 = new Renderer3D( model2, shader )
