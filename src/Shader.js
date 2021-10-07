@@ -34,6 +34,10 @@ class Shader {
                     model.material.diffuse.bind()
                     this.setUniformI( value.loc, model.material.diffuse.samplerSlot )
                     break;
+                case "normalMap":
+                    model.material.normal.bind()
+                    this.setUniformI( value.loc, model.material.normal.samplerSlot )
+                    break;
                 case "transformationMatrix":
                     this.setUniformMatrix( value.loc, transform.getTransformationMatrix() )
                     break;

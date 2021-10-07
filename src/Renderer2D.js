@@ -9,6 +9,8 @@ class Renderer2D extends Renderer
         super( model, shader )
 
         shader.addUniform( "diffuse", "1i" )
+        shader.addUniform( "normalMap", "1i" )
+        
         shader.addUniform( "transformationMatrix", "mat" )
         shader.addUniform( "projectionMatrix", "mat" )
         shader.addUniform( "viewMatrix", "mat" )

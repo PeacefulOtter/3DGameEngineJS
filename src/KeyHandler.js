@@ -29,11 +29,13 @@ class KeyHandler
         vertices[1][1] += canvasY
         vertices[2][1] += canvasY
 
-        const textures = [vec2(0, 1), vec2(0, 0), vec2(1, 1)];
+        const textures = [[vertices[0][0], vertices[0][1]],[vertices[1][0], vertices[1][1]], [vertices[2][0], vertices[2][1]]];
 
-        let m = RawModel._constructWithVertices( vertices, textures, "brick", ".jpg" )
+        let m = RawModel._constructWithVertices( vertices, textures, "rock2", ".png" )
         let s = new Shader( "2D.vs", "2D.fs" )
         let point = new Renderer2D( m, s );
+        point.transform.scale(2);
+
         points.push(point)
     }
 
