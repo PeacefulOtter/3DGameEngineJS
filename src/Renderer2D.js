@@ -15,6 +15,7 @@ class Renderer2D extends Renderer
         shader.addUniform( "transformationMatrix", "mat" )
         shader.addUniform( "projectionMatrix", "mat" )
         shader.addUniform( "viewMatrix", "mat" )
+        shader.addUniform( "LightPos", "vec3" )
 
         shader.addAttribute( "position", model.positions, 3 )
         shader.addAttribute( "texture", model.textures, 2)
@@ -23,15 +24,13 @@ class Renderer2D extends Renderer
         this.transform.rotateVec(Vector3f.Y_AXIS, 180)
     }
 
-    update = () => {
-        // UPDATE AN ATTRIBUTE
-        // this.color[0] = add(this.color[0], vec4(0, 0.005, 0, 0))
-        // this.color[1] = add(this.color[1], vec4(0, 0.005, 0, 0))
-        // this.color[2] = add(this.color[2], vec4(0, 0.005, 0, 0))
-        // gl.bindBuffer(gl.ARRAY_BUFFER, this.shader.attributes["color"].buffer)
-        // gl.bufferData(gl.ARRAY_BUFFER, flatten(this.color), gl.STATIC_DRAW);
-
-        // let delta = sub(this.aim, this.transform.translation.xy());
-        // this.transform.translate(delta[0] / 50, delta[1] / 50, 0);
+    // TODO: add time?
+    update = (deltaTime) => {
+        this.time += deltaTime / 1000;
+        this.lightPos.set(
+            Math.cos(this.time), 
+            Math.sin(this.time), 
+            1)
+        this.shader.setUniform("LightPos", this.lightPos.vec(), "vec3");
     }
 }

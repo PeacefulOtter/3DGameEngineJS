@@ -37,6 +37,26 @@ class Shader {
         gl.useProgram( this.program );
     }
 
+    unbind = () => {
+        gl.useProgram( null );
+    }
+
+    setUniform = (uniformName, data, type) => {
+        this.bind()
+        let loc = gl.getUniformLocation(this.program, uniformName)
+        
+        switch (type) {
+            case "vec3":
+                this.setUniformVector3f(loc, data)
+                break;
+            // TODO: add more
+            default:
+                break;
+        }
+
+        this.unbind()
+    }
+
     /**
      * FIXME: camera as argument to avoid var
      * @param {Transform} transform 

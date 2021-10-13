@@ -3,6 +3,8 @@ precision mediump float;
 varying highp vec2 vtexture;
 varying vec4 vcolor;
 
+uniform vec3 LightPos;
+
 uniform sampler2D diffuse;
 uniform sampler2D normalMap;
 
@@ -10,7 +12,6 @@ void main() {
     // gl_FragColor = texture2D(diffuse, vtexture); 
 
     vec2 Resolution = vec2(512, 512);      //resolution of screen
-    vec3 LightPos = vec3(0.0, 0.0, 1.0);        //light position, normalized
     vec4 LightColor = vec4(1.0, 0.8, 0.6, 1.0);      //light RGBA -- alpha is intensity
     vec4 AmbientColor = vec4(0.6, 0.6, 1.0, 0.2);    //ambient RGBA -- alpha is intensity 
     vec3 Falloff = vec3(0.3, 1.0, 2.0);

@@ -11,27 +11,39 @@ class Renderer3D extends Renderer {
         super( model, shader )
 
         shader.addUniform( "diffuse", "1i" )
-        shader.addUniform("normalMap", "1i")
+        shader.addUniform( "normalMap", "1i")
 
         shader.addUniform( "translation", "vec3" );
         shader.addUniform( "transformationMatrix", "mat" )
         shader.addUniform( "projectionMatrix", "mat" )
         shader.addUniform( "viewMatrix", "mat" )
 
+        shader.addAttribute( "position", model.positions, 3 )
+        shader.addAttribute( "texture", model.textures, 2 )
+        shader.addAttribute( "normal", model.normals, 3 )
+
         this.transform.translate(0, 0, 2);
+
+
+        // REMOVE
+        shader.addUniform( "LightPos", "vec3" )
+        this.lightPos = new Vector3f(0, 0, 1)
+        this.time  =0;
     }
     
 
 
-    update = () => {
-        // console.log("here");
-        // this.transform.setTranslation(0, 0, -5.9 + Math.sin(this.time++ / 30) / 15);
-        // this.shader.updateUniforms(this.transform)
+    update = (deltaTime) => {
+        this.time += deltaTime / 1000;
+        this.lightPos.set(
+            Math.cos(this.time), 
+            Math.sin(this.time), 
+            1)
+        this.shader.setUniform("LightPos", this.lightPos.vec(), "vec3");
     }
 
 
     draw = () => {
-        // Renderer.prototype.draw.call(this)
         Renderer.prototype.enableAttribs.call(this);
         
         gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.model.indexBuffer);
@@ -40,33 +52,3 @@ class Renderer3D extends Renderer {
         Renderer.prototype.disableAttribs.call(this);
     }
 }
-
-
-// DRAW
-
-        /*gl.enableVertexAttribArray( 0 );
-        gl.enableVertexAttribArray( 1 );
-        gl.enableVertexAttribArray( 2 );
-        // gl.enableVertexAttribArray( 3 );
-        
-        // VBOs
-        gl.bindBuffer( gl.ARRAY_BUFFER, this.mesh.vbo )
-        gl.vertexAttribPointer(0, 3, gl.FLOAT, false, Vertex.VERTEX_SIZE * 4, 0); // positions
-        gl.vertexAttribPointer(1, 2, gl.FLOAT, false, Vertex.VERTEX_SIZE * 4, 12 ); // textures
-        gl.vertexAttribPointer(2, 3, gl.FLOAT, false, Vertex.VERTEX_SIZE * 4, 20 ); // normals
-        // gl.vertexAttribPointer(3, 3, gl.FLOAT, false, Vertex.VERTEX_SIZE * 4, 32 ); // tangents
-
-        // COLOR - WHERE ???
-        // gl.bindBuffer( gl.ARRAY_BUFFER, this.shader.attributes["color"] )
-        // gl.vertexAttribPointer(0, 4, gl.FLOAT, false, 0, 0);
-
-        gl.drawArrays( gl.TRIANGLES, 0, this.positions.length )
-
-        // INDICES
-        // gl.bindBuffer( gl.ELEMENT_ARRAY_BUFFER, this.mesh.ibo );
-        // gl.drawElements( gl.TRIANGLES, this.model.indices.length, gl.UNSIGNED_INT, 0 );
-
-        gl.disableVertexAttribArray( 0 );
-        gl.disableVertexAttribArray( 1 );
-        gl.disableVertexAttribArray( 2 );
-        // gl.disableVertexAttribArray( 3 );*/

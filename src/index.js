@@ -60,14 +60,14 @@ let render = (a) => {
     // RENDER
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-    renderer.update()
-    renderer.render()
+    // renderer.update(deltaTime)
+    // renderer.render()
 
     // renderer2.update()
     // renderer2.render()
 
     points.forEach((point, i) => {
-        point.update()
+        point.update(deltaTime)
         point.render()
     });
 

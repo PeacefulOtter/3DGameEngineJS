@@ -65,7 +65,14 @@ class RawModel {
     }
 
 
-    addTextCoords = (texCoords) => {
+    setTextCoords = (texCoords) => {
         this.textures = texCoords;
+    }
+
+    setIndices = (indices) => {
+        this.indexBuffer = gl.createBuffer();
+        gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, this.indexBuffer);
+        gl.bufferData( gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(indices), gl.STATIC_DRAW );
+        this.indicesLength = indices.length;
     }
 }
